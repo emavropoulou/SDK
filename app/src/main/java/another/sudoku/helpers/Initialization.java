@@ -1,4 +1,4 @@
-package testanew.sdk.helpers;
+package another.sudoku.helpers;
 
 import android.util.Log;
 

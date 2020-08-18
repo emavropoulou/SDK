@@ -1,4 +1,4 @@
-package testanew.sdk.helpers;
+package another.sudoku.helpers;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,7 +13,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-import testanew.sudoku.R;
+import another.sudoku.R;
 
 public class NumbersAdapter extends BaseAdapter {
     private String[] itemsName;

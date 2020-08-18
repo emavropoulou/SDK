@@ -1,4 +1,4 @@
-package testanew.sudoku;
+package another.sudoku;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

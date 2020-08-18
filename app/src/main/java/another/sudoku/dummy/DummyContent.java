@@ -1,4 +1,4 @@
-package testanew.sdk.dummy;
+package another.sudoku.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package testanew.sudoku;
+package another.sudoku;
 
 import org.junit.Test;
 
