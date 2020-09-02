@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="game.sudoku.MainActivity"
+    tools:context="game.sudoku.activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <RelativeLayout

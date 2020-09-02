@@ -16,48 +16,52 @@ import java.util.List;
 import game.sudoku.R;
 
 public class NumbersAdapter extends BaseAdapter {
-    private String[] itemsName;
+    private String[] tempNumbersTable;
     private Context context;
 
     private int[] borders;
     private List<Integer> editablePositions;
-    private int Squared;
-    private long pos;
+    private int rowLength;
+    private int columnLength;
+    private int squared;
+    private long position;
 
-    public NumbersAdapter(Context context, int[][] ItemsName) {
-        pos = -1;
+    public NumbersAdapter(Context context, int[][] numbersTable) {
+        position = -1;
         editablePositions = new ArrayList<>();
-        int squaredRoot = (int) Math.sqrt(ItemsName.length);
-        Squared = ItemsName.length;
-        itemsName = new String[ItemsName.length * ItemsName.length];
-        borders = new int[ItemsName.length * ItemsName.length];
+
+        int squaredRoot = (int) Math.sqrt(numbersTable.length);
+        rowLength = columnLength=numbersTable.length;
+        squared = (int) Math.pow(rowLength,2);
+        tempNumbersTable = new String[squared];
+        borders = new int[squared];
         int count = 0;
-        for (int i = 0; i < ItemsName.length; i++) {
-            for (int j = 0; j < ItemsName.length; j++) {
-                if (i == 0 && j % squaredRoot == 0) {
+        for (int row = 0; row < rowLength; row++) {
+            for (int column = 0; column < columnLength; column++) {
+                if (row == 0 && column % squaredRoot == 0) {
                     borders[count] = 2;
-                } else if (i == 0 && j == ItemsName.length - 1) {
+                } else if (row == 0 && column == rowLength - 1) {
                     borders[count] = 6;
-                } else if (i == 0 && j != ItemsName.length - 1 && j % squaredRoot != 0) {
+                } else if (row == 0 && column != rowLength - 1 && column % squaredRoot != 0) {
                     borders[count] = 4;
-                } else if (i != 0 && i % squaredRoot == squaredRoot - 1 && j % squaredRoot == 0) {
+                } else if (row != 0 && row % squaredRoot == squaredRoot - 1 && column % squaredRoot == 0) {
                     borders[count] = 3;
-                } else if (i != 0 && i % squaredRoot == squaredRoot - 1 && j != ItemsName.length - 1 && j % squaredRoot != 0) {
+                } else if (row != 0 && row % squaredRoot == squaredRoot - 1 && column != rowLength - 1 && column % squaredRoot != 0) {
                     borders[count] = 8;
-                } else if (i != 0 && i % squaredRoot == squaredRoot - 1 && j == ItemsName.length - 1 && j % squaredRoot != 0) {
+                } else if (row != 0 && row % squaredRoot == squaredRoot - 1 && column == rowLength - 1 && column % squaredRoot != 0) {
                     borders[count] = 7;
-                } else if (i != 0 && (i % squaredRoot != squaredRoot - 1) && j % squaredRoot == 0) {
+                } else if (row != 0 && (row % squaredRoot != squaredRoot - 1) && column % squaredRoot == 0) {
                     borders[count] = 1;
-                } else if (i != 0 && (i % squaredRoot != squaredRoot - 1) && j == ItemsName.length - 1) {
+                } else if (row != 0 && (row % squaredRoot != squaredRoot - 1) && column == rowLength - 1) {
                     borders[count] = 5;
                 } else {
                     borders[count] = 0;
                 }
 
-                if (ItemsName[i][j] != 0) {
-                    this.itemsName[count] = String.valueOf(ItemsName[i][j]);
+                if (numbersTable[row][column] != 0) {
+                    this.tempNumbersTable[count] = String.valueOf(numbersTable[row][column]);
                 } else {
-                    this.itemsName[count] = " ";
+                    this.tempNumbersTable[count] = " ";
                     this.editablePositions.add(count);
                 }
                 count = count + 1;
@@ -70,46 +74,45 @@ public class NumbersAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        return itemsName.length;
+        return tempNumbersTable.length;
     }
 
     @Override
-    public Object getItem(int position) {
-        return itemsName[position];
+    public Object getItem(int itemsPosition) {
+        return tempNumbersTable[itemsPosition];
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getItemId(int itemsIdPosition) {
+        return itemsIdPosition;
     }
 
 
     public long getPosition() {
-        return pos;
+        return position;
     }
 
-    public void setNum(int num, int position, int size) {
-
+    public void setNum(int num, int numPosition, int size) {
 
         switch (size) {
             case 3:
                 if (num != 0) {
-                    if (position >= 0) {
+                    if (numPosition >= 0) {
                         StringBuilder s = new StringBuilder();
-                        s.append(itemsName[position]);
+                        s.append(tempNumbersTable[numPosition]);
                         s.append(String.valueOf(num));
                         if (s.toString().length() > 2) {
                             s.deleteCharAt(1);
                         }
-                        itemsName[position] = s.toString();
+                        tempNumbersTable[numPosition] = s.toString();
                         this.notifyDataSetChanged();
                     }
                 }
                 break;
             case 4:
-                if (position >= 0) {
+                if (numPosition >= 0) {
                     StringBuilder s = new StringBuilder();
-                    s.append(itemsName[position]);
+                    s.append(tempNumbersTable[numPosition]);
                     s.append(String.valueOf(num));
                     if (s.toString().length() == 2) {
                         if (num == '0') {
@@ -128,7 +131,7 @@ public class NumbersAdapter extends BaseAdapter {
                         }
 
                     }
-                    itemsName[position] = s.toString();
+                    tempNumbersTable[numPosition] = s.toString();
                     this.notifyDataSetChanged();
                 }
                 break;
@@ -139,23 +142,23 @@ public class NumbersAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int viewPosition, View convertView, ViewGroup parent) {
         EditText text = new EditText(this.context);
 
 
-        if ((pos == position)) {
+        if ((position == viewPosition)) {
             text.setEnabled(true);
             text.setBackgroundColor(Color.parseColor("#ffffbb33"));
             text.setInputType(InputType.TYPE_NULL);
             text.setOnFocusChangeListener((v, event) -> {
 
                 if (event) {
-                    pos = position;
+                    position = viewPosition;
                     text.setBackgroundColor(Color.GREEN);
                 } else {
-                    pos = -1;
+                    position = -1;
                     text.setBackgroundColor(Color.WHITE);
-                    switch (borders[position]) {
+                    switch (borders[viewPosition]) {
                         case 0: {
                             break;
                         }
@@ -195,7 +198,7 @@ public class NumbersAdapter extends BaseAdapter {
                     }
                 }
             });
-            switch (borders[position]) {
+            switch (borders[viewPosition]) {
                 case 0: {
                     break;
                 }
@@ -236,21 +239,21 @@ public class NumbersAdapter extends BaseAdapter {
                 }
             }
         }
-        text.setText(itemsName[position]);
-        if (itemsName[position].equals(" ") || editablePositions.contains(position)) {
+        text.setText(tempNumbersTable[viewPosition]);
+        if (tempNumbersTable[viewPosition].equals(" ") || editablePositions.contains(viewPosition)) {
             text.setEnabled(true);
             text.setBackgroundColor(Color.parseColor("#ffffbb33"));
             text.setInputType(InputType.TYPE_NULL);
 
             text.setOnFocusChangeListener((v, event) -> {
                 if (event) {
-                    pos = position;
+                    position = viewPosition;
                     text.setBackgroundColor(Color.GREEN);
                 } else {
-                    pos = -1;
+                    position = -1;
                     text.setBackgroundColor(Color.parseColor("#ffffbb33"));
                     ;
-                    switch (borders[position]) {
+                    switch (borders[viewPosition]) {
                         case 0: {
                             break;
                         }
@@ -290,7 +293,7 @@ public class NumbersAdapter extends BaseAdapter {
                     }
                 }
             });
-            switch (borders[position]) {
+            switch (borders[viewPosition]) {
                 case 0: {
                     break;
                 }
@@ -333,10 +336,10 @@ public class NumbersAdapter extends BaseAdapter {
         } else {
 
             text.setEnabled(false);
-            text.setText(itemsName[position]);
+            text.setText(tempNumbersTable[viewPosition]);
             text.setTextColor(Color.BLACK);
             text.setBackgroundColor(Color.WHITE);
-            switch (borders[position]) {
+            switch (borders[viewPosition]) {
                 case 0: {
                     break;
                 }
@@ -381,7 +384,7 @@ public class NumbersAdapter extends BaseAdapter {
         text.setGravity(Gravity.CENTER);
         text.setPadding(0, 0, 0, 0);
 
-        int newsize = (parent.getWidth() - 40) / Squared; // computing new size
+        int newsize = (parent.getWidth() - 40) / rowLength; // computing new size
 
         text.setLayoutParams(new GridView.LayoutParams(newsize, newsize));
 
