@@ -1,4 +1,4 @@
-package another.sudoku;
+package game.sudoku;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import another.sudoku.helpers.Initialization;
-import another.sudoku.helpers.NumbersAdapter;
-import another.sudoku.R;
+import game.sudoku.helpers.Initialization;
+import game.sudoku.helpers.NumbersAdapter;
+import game.sudoku.R;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)

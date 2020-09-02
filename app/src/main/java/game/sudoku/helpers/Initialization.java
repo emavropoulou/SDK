@@ -1,4 +1,4 @@
-package another.sudoku.helpers;
+package game.sudoku.helpers;
 
 import android.util.Log;
 

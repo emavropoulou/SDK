@@ -1,4 +1,4 @@
-package another.sudoku;
+package game.sudoku;
 
 import org.junit.Test;
 

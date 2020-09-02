@@ -1,4 +1,4 @@
-package another.sudoku.dummy;
+package game.sudoku.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

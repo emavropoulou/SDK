@@ -1,4 +1,4 @@
-package another.sudoku;
+package game.sudoku;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("testanew.sudoku", appContext.getPackageName());
+        assertEquals("game.sudoku", appContext.getPackageName());
     }
 }
