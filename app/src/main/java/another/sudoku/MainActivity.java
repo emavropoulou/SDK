@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     private class LongOperation extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            data = iis.myinitializeSudokuNumbers(SquaredRoot);
+            data = iis.initializeSudokuNumbers(SquaredRoot);
             return null;
         }
 
